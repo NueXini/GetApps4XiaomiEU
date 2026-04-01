@@ -1,0 +1,12 @@
+{
+    "metamodule": false,
+    "summary": "为XiaomiEU固件添加国行应用商店, 理论上适用于全部外区ROM",
+    "sourceUrl": "https://github.com/NueXini/GetApps4XiaomiEU",
+    "additionalAuthors": [
+        {
+            "type": "add",
+            "name": "NueXini",
+            "link": "https://github.com/NueXini"
+        }
+    ]
+}

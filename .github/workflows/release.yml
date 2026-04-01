@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "*.*.*"
+
+jobs:
+  build-module:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+ 
+      - name: Setup tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y erofs-utils erofsfuse wget unzip xz-utils
+          wget 'https://github.com/ssut/payload-dumper-go/releases/download/1.3.0/payload-dumper-go_1.3.0_linux_amd64.tar.gz'
+          tar -xvf payload-dumper-go_1.3.0_linux_amd64.tar.gz
+          chmod +x payload-dumper-go
+
+      - name: Download HyperOS
+        run: |
+          wget 'https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/OS1.0.24.7.28.DEV/miui_MONDRIAN_OS1.0.24.7.28.DEV_22e37ea2de_14.0.zip'
+          unzip miui_MONDRIAN_OS1.0.24.7.28.DEV_22e37ea2de_14.0.zip payload.bin
+
+      - name: Unpack HyperOS
+        run: |
+          ./payload-dumper-go -o ./ -p product ./payload.bin
+          rm payload.bin
+          mkdir product
+          fsck.erofs product.img --extract=product
+          df -h
+          free -h
+
+      - name: Assemble module
+        run: |
+          # 可以选择加入任何App
+          cp -a ./product/app/MIUISuperMarket ./module/system/app/MIUISuperMarket
+
+      - name: Package module
+        run: |
+          cd module/
+          zip -r ../GetApps4XiaomiEU.zip *
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: GetApps4XiaomiEU.zip
