@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@latest
  
       - name: Setup tools
         run: |
@@ -25,8 +25,8 @@ jobs:
 
       - name: Download HyperOS
         run: |
-          wget 'https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/OS1.0.24.7.28.DEV/miui_MONDRIAN_OS1.0.24.7.28.DEV_22e37ea2de_14.0.zip'
-          unzip miui_MONDRIAN_OS1.0.24.7.28.DEV_22e37ea2de_14.0.zip payload.bin
+          wget 'https://bkt-sgp-miui-ota-update-alisgp.oss-ap-southeast-1.aliyuncs.com/OS3.0.5.0.VMNCNXM/mondrian-ota_full-OS3.0.5.0.VMNCNXM-user-15.0-d9db2e6dd9.zip'
+          unzip mondrian-ota_full-OS3.0.5.0.VMNCNXM-user-15.0-d9db2e6dd9.zip payload.bin
 
       - name: Unpack HyperOS
         run: |
@@ -48,6 +48,6 @@ jobs:
           zip -r ../GetApps4XiaomiEU.zip *
 
       - name: Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@latest
         with:
           files: GetApps4XiaomiEU.zip
