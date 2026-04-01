@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@latest
+        uses: actions/checkout@v6
  
       - name: Setup tools
         run: |
@@ -48,6 +48,6 @@ jobs:
           zip -r ../GetApps4XiaomiEU.zip *
 
       - name: Release
-        uses: softprops/action-gh-release@latest
+        uses: softprops/action-gh-release@v2
         with:
           files: GetApps4XiaomiEU.zip
