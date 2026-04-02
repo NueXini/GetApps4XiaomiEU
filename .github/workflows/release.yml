@@ -31,16 +31,15 @@ jobs:
       - name: Unpack HyperOS
         run: |
           ./payload-dumper-go -o ./ -p product ./payload.bin
-          rm payload.bin
-          mkdir product
+          mkdir -p product
           fsck.erofs product.img --extract=product
-          df -h
-          free -h
 
       - name: Assemble module
         run: |
-          # 可以选择加入任何App
+          # add App
           cp -a ./product/app/MIUISuperMarket ./module/system/app/MIUISuperMarket
+          # remove oat
+          find ./module -name "oat" -type d -exec rm -rf {} +
 
       - name: Package module
         run: |
