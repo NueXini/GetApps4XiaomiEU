@@ -1,9 +1,0 @@
-*.zip
-*.tar.gz
-*.pb
-*.bin
-*.img
-
-product
-payload_properties.txt
-payload-dumper-go

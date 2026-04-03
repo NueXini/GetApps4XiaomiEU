@@ -33,13 +33,22 @@ jobs:
           ./payload-dumper-go -o ./ -p product ./payload.bin
           mkdir -p product
           fsck.erofs product.img --extract=product
+          
+      - name: List Directory
+        run: |
+          ls -a ./product/app
 
-      - name: Assemble module
+      - name: Copy App to system product app
         run: |
           # add App
-          cp -a ./product/app/MIUISuperMarket ./module/system/app/MIUISuperMarket
+          cp -a ./product/app/MIUISuperMarket ./module/system/product/app/MIUISuperMarket
+          
+      - name: Remove useless files
+        run: |
           # remove oat
           find ./module -name "oat" -type d -exec rm -rf {} +
+          # 
+          rm ./module/system/product/app/.gitkeep
 
       - name: Package module
         run: |
